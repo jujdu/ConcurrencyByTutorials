@@ -28,17 +28,17 @@
 
 import Foundation
 
-let sentence = "Ray's courses aren't the best"
+let sentence = "Ray's courses are the best"
 let wordOperation = BlockOperation()
 
-for word in sentence.split(separator: " ") {
+sentence.split(separator: " ").forEach { word in
     wordOperation.addExecutionBlock {
         print(word)
         sleep(2)
     }
 }
 
-wordOperation.completionBlock = {
+wordOperation.completionBlock = { // сработает в конце после всех операций
     print("Thank you for your patronage")
 }
 

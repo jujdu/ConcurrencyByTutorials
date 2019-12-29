@@ -31,6 +31,22 @@ import UIKit
 class TiltShiftTableViewController: UITableViewController {
   private let context = CIContext()
   private let queue = OperationQueue()
+  private var urls: [URL] = []
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    guard
+      let plist = Bundle.main.url(forResource: "Photos", withExtension: "plist"),
+      let contents = try? Data(contentsOf: plist),
+      let serial = try? PropertyListSerialization.propertyList(from: contents, format: nil),
+      let serialUrls = serial as? [String] else {
+        print("Something went wrong")
+        return
+    }
+    
+    urls = serialUrls.compactMap(URL.init)
+  }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 10
@@ -38,22 +54,18 @@ class TiltShiftTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "normal", for: indexPath) as! PhotoCell
- 
-    let image = UIImage(named: "\(indexPath.row).png")!
-    print("Filtering")
-    let op = TiltShiftOperation(image: image)
+
+    let op = NetworkImageOperation(url: urls[indexPath.row])
     op.completionBlock = {
       DispatchQueue.main.async {
         guard let cell = tableView.cellForRow(at: indexPath) as? PhotoCell else { return }
-        
+
         cell.isLoading = false
-        cell.display(image: op.outputImage)
-        print("Done")
+        cell.display(image: op.image)
       }
     }
     queue.addOperation(op)
-
-
+    
     return cell
   }
 }

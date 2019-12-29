@@ -81,8 +81,8 @@
 				6F9ED73623B6361E003620DC /* AsyncOperation.swift */,
 				D27437512211DFBB00B1E02F /* PhotoCell.swift */,
 				D2CC8F0E220890C50025B523 /* TiltShiftFilter.swift */,
-				D274374F2211DC9F00B1E02F /* TiltShiftTableViewController.swift */,
 				6F9ED73223B5FB31003620DC /* TiltShiftOperation.swift */,
+				D274374F2211DC9F00B1E02F /* TiltShiftTableViewController.swift */,
 			);
 			path = Concurrency;
 			sourceTree = "<group>";
