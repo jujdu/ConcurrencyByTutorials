@@ -38,9 +38,10 @@ final class PhotoCell: UITableViewCell {
     theImageView.image = image
   }
   
-//  override func prepareForReuse() {
-//    theImageView.image = nil
-//  }
+  override func prepareForReuse() {
+    theImageView.image = nil
+    activityIndicator.startAnimating()
+  }
   
   var isLoading: Bool {
     get { return activityIndicator.isAnimating }
